@@ -1,12 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
+import constants from "./constants/constants";
+import axios from "axios";
+
 import "./App.css";
 
 function App() {
+  const [houses, setHouses] = useState([]);
   const [count, setCount] = useState(0);
+  useEffect(() => {
+    // const server = axios.create({
+    //   baseURL: import.meta.env.VITE_SERVER_URI
+    //     ? import.meta.env.VITE_SERVER_URI
+    //     : constants.DEFAULT_SERVER,
+    // });
+    // server
+    //   .get(import.meta.env.VITE_SERVER_URI)
+    //   .then((houses) => {
+    //     console.log("hi");
+    //   })
+    //   .catch((err) => {
+    //     console.log("buye");
+    //   });
+    axios
+      .get(import.meta.env.VITE_SERVER_URI)
+      .then((houses) => {
+        setHouses(houses.data);
+      })
+      .catch((err) => console.log(err));
+  }, [count]);
 
   return (
     <div className="App">
+      <div>
+        {houses.map((house) => (
+          <div key={house._id}>
+            {house.name} - {house._id}
+          </div>
+        ))}
+      </div>
       <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" className="logo" alt="Vite logo" />
