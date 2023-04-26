@@ -5,6 +5,7 @@ import Navbar from "./components/Nabar-Sidebar/Navbar/Navbar";
 import Sidebar from "./components/Nabar-Sidebar/Sidebar/Sidebar";
 import Apartments from "./components/ApartmentsPage/Apartments";
 import Residents from "./components/ApartmentInfo/ResidentsPage/ResidentsPage";
+import CreateReport from "./components/ReportPage/CreateReport";
 import ResidentInfoPage from "./components/ResidentInfoPage/ResidentInfoPage/ResidentInfoPage";
 import Home from "./components/Home/Home";
 import ServerError from "./components/ServerError/ServerError";
@@ -69,6 +70,7 @@ const App = () => {
             }
           />
           <Route path="/apartments/:instructorId" element={<Apartments />} />
+          <Route path="/create-shift-report" element={<CreateReport />} />
           <Route
             path="/Coordinator/dashboard/:id"
             element={<CoordinatorHome />}

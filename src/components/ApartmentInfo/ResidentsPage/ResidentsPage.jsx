@@ -33,7 +33,7 @@ const Residents = ({}) => {
   try {
     return (
       <>
-        <ApartmenPagetHeader apartment={apartment} />
+        <ApartmenPagetHeader apartment={apartment} residents={residents} />
         <ResidentsTable residents={residents} />
       </>
     );

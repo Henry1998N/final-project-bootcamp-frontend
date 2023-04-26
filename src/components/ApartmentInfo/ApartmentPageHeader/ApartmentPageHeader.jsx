@@ -2,11 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./ApartmentPageHeader.css";
 import CDN from "../CDN";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import ApiManager from "../../../apiManager/apiManager";
 const FONT_AWESOME_CDN =
   "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css";
 
-const ApartmenPagetHeader = ({ apartment }) => {
+const ApartmenPagetHeader = ({ apartment, residents }) => {
+  const navigate = useNavigate()
+  const createShiftReport = () => {
+    navigate('/create-shift-report', {state: residents})
+  }
 
   try {
     return (
@@ -32,6 +37,9 @@ const ApartmenPagetHeader = ({ apartment }) => {
             <div className="info-item">
               <h5>People</h5>
               <p>{apartment.residents ? apartment.residents.length + " Residents" : null}</p>
+            </div>
+            <div className="info-item">
+              <button onClick={createShiftReport}>Create Shift Report</button>
             </div>
           </div>
         </div>
