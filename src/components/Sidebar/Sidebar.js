@@ -9,7 +9,7 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { demouser } from "../../Assets/index";
 import { useEffect, useState } from "react";
 import ApiManager from "../../apiManager/apiManager";
@@ -18,17 +18,19 @@ import CoordinatorApiMan from "../../coordinatorApiManager/coordinatorApiMan";
 const Sidebar = () => {
   const [userData, setUserData] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
   useEffect(() => {
     const apiManager = new ApiManager();
-    const coordinatorApiMan = new CoordinatorApiMan()
+    const coordinatorApiMan = new CoordinatorApiMan();
 
     const fetchUser = async () => {
-      let fetchedUser
+      let fetchedUser;
       if (user.userType === "Instructor") {
         fetchedUser = await apiManager.getInstructorById(user.userId);
-      }
-      else {
-        fetchedUser = await coordinatorApiMan.getCoordinatorByCoordinatorID(user.userId);
+      } else {
+        fetchedUser = await coordinatorApiMan.getCoordinatorByCoordinatorID(
+          user.userId
+        );
       }
       try {
         setUserData(fetchedUser);
@@ -43,6 +45,7 @@ const Sidebar = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.reload();
+    // navigate("/login");
   };
 
   return (
@@ -56,7 +59,9 @@ const Sidebar = () => {
           />
         </Link>
         <div className="profile-details">
-          <div className="profile-name">{userData?.name ? userData.name : userData.fullName}</div>
+          <div className="profile-name">
+            {userData?.name ? userData.name : userData.fullName}
+          </div>
           <div className="profile-job">
             {user?.userType === "Instructor" ? "Instructor" : "Coordinator"}
           </div>
@@ -130,7 +135,13 @@ const Sidebar = () => {
             </li>
           </Link>
           <hr className="sidebar-divider" />
-          <Link to={`${user.userType === "Instructor" ? "/instructor/profile" : "/Coordinator/profile"}`}>
+          <Link
+            to={`${
+              user.userType === "Instructor"
+                ? "/instructor/profile"
+                : "/Coordinator/profile"
+            }`}
+          >
             <li>
               <AccountCircleOutlinedIcon className="icon" />
               <span>Profile</span>
